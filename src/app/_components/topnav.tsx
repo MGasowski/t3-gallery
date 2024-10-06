@@ -3,7 +3,6 @@ import {
   SignedOut,
   SignInButton,
   SignOutButton,
-  UserButton,
 } from "@clerk/nextjs";
 
 export const TopNav = () => {
