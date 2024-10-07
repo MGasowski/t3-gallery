@@ -4,6 +4,7 @@ import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
 import { TopNav } from "./_components/topnav";
+import { TopbarComponent } from "~/components/topbar";
 
 export const metadata: Metadata = {
   title: "T3 Gallery",
@@ -20,7 +21,8 @@ export default function RootLayout({
       <html lang="en" className={`${GeistSans.variable} `}>
         <body className="">
           <div className="grid h-screen grid-rows-[auto,1fr]">
-            <TopNav />
+            {/* <TopNav /> */}
+            <TopbarComponent />
             <main className="overflow-y-scroll">{children}</main>
             {modal}
             <div id="modal-root" />

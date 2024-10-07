@@ -1,22 +1,26 @@
-import { SignedIn, SignedOut } from "@clerk/nextjs";
-import Image from "next/image";
-import Link from "next/link";
-import { getMyImages } from "~/server/queries";
+import { HorizontalInfiniteSlider } from "~/components/horizontal-infinite-slider";
+import { InfiniteSlider } from "~/components/infinite-slider";
+import { MasonryGalleryComponent } from "~/components/masonry-gallery";
+import { categories } from "~/constants";
+import { getImages } from "~/server/queries";
 
 export const dynamic = "force-dynamic";
 
 async function Images() {
-  const images = await getMyImages();
+  const images = await getImages();
   return (
     <div className="flex flex-wrap justify-center gap-4 p-4">
-      {images.map((image) => (
-        <div key={image.id} className="flex h-48 w-48 flex-col">
-          <Link href={`/img/${image.id}`}>
-            <Image src={image.url} alt="users image" width={480} height={480} />
-          </Link>
-          <div>{image.name}</div>
-        </div>
-      ))}
+      {/* <InfiniteSlider images={images} />4 */}
+      <HorizontalInfiniteSlider images={images} />
+      <MasonryGalleryComponent
+        categories={categories}
+        galleryItems={images.map((el) => ({
+          id: el.id,
+          src: el.url,
+          alt: el.name,
+          category: ["lifestyle"],
+        }))}
+      />
     </div>
   );
 }
@@ -24,12 +28,7 @@ async function Images() {
 export default async function HomePage() {
   return (
     <main className="">
-      <SignedOut>
-        <div className="h-full w-full text-center text-2xl">Please Sign in</div>
-      </SignedOut>
-      <SignedIn>
-        <Images />
-      </SignedIn>
+      <Images />
     </main>
   );
 }
